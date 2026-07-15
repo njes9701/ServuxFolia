@@ -1,0 +1,9 @@
+.gradle/
+.idea/
+build/
+run/
+logs/
+out/
+schematics-fixtures/
+*.iml
+*.log

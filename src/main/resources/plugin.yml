@@ -1,0 +1,33 @@
+name: ServuxFolia
+version: '${version}'
+main: dev.njes.servuxfolia.ServuxFoliaPlugin
+api-version: '26.2'
+author: njes9701
+description: Folia-native implementation of the Servux protocol
+folia-supported: true
+
+permissions:
+  servuxfolia.litematics:
+    description: Allows use of the Litematica Servux data channel
+    default: true
+  servuxfolia.admin:
+    description: Allows administration of ServuxFolia
+    default: op
+  servuxfolia.paste:
+    description: Allows Servux Direct Paste
+    default: op
+  servuxfolia.structures:
+    description: Allows MiniHUD world-generation structure bounding boxes
+    default: true
+  servuxfolia.entitydata:
+    description: Allows MiniHUD entity_data queries (beehives by default)
+    default: true
+  litematica.place:
+    description: Allows Litematica/Tweakeroo accurate block placement
+    default: true
+
+commands:
+  servuxfolia:
+    aliases: [sfolia]
+    description: Shows ServuxFolia status or reloads its configuration
+    usage: /<command> [status|reload]

@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'xyz.jpenilla.run-paper' version '3.0.2'
+    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.21'
+}
+
+group = 'dev.njes'
+version = '1.0.0'
+description = 'A Folia-native, Servux wire-compatible server plugin'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+}
+
+dependencies {
+    paperweight.paperDevBundle('26.2.build.60-beta')
+    testImplementation(platform('org.junit:junit-bom:5.12.2'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release.set(25)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.runServer {
+    minecraftVersion('26.2')
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties(props)
+    filteringCharset = 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(props)
+    }
+}

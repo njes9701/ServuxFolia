@@ -1,0 +1,22 @@
+# Optional Folia/Bukkit permissions.yml template for ServuxFolia.
+#
+# ServuxFolia already declares the same safe defaults in plugin.yml, so this
+# file is not required. Copy it to the server root only when you want named
+# parent permissions for a permissions manager or server-level overrides.
+
+servuxfolia.player:
+  description: All non-destructive ServuxFolia features for regular players
+  default: true
+  children:
+    litematica.place: true
+    servuxfolia.litematics: true
+    servuxfolia.structures: true
+    servuxfolia.entitydata: true
+
+servuxfolia.operator:
+  description: ServuxFolia blueprint paste and administration
+  default: op
+  children:
+    servuxfolia.player: true
+    servuxfolia.paste: true
+    servuxfolia.admin: true

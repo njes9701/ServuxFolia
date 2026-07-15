@@ -1,0 +1,78 @@
+config-version: 4
+
+litematics:
+  enabled: true
+  # Enables the full Servux capability handshake. Keep false unless players
+  # should be allowed to use Bulk NBT and (when separately enabled) Direct Paste.
+  advertise: false
+  max-distance: 128
+  block-entity-requests-per-second: 64
+  entity-requests-per-second: 32
+  bulk-requests-per-second: 4
+  max-inbound-payload-bytes: 16777216
+  # Bounds incomplete client splitter sessions before Direct Paste decoding.
+  max-reassembled-payload-bytes: 33554432
+  max-inbound-sessions: 4
+  splitter-slice-bytes: 30000
+
+direct-paste:
+  enabled: false
+  require-creative: true
+  # Global limit, in addition to one active paste per player.
+  max-concurrent: 1
+  max-uncompressed-bytes: 33554432
+  max-volume: 5000000
+  deferred-physics: true
+  observers-last: true
+
+# MiniHUD world-generation structure main/component bounding boxes.
+structures:
+  enabled: true
+  update-interval-ticks: 40
+  timeout-ticks: 600
+  movement-threshold-chunks: 2
+  radius-chunks: 8
+  max-chunks-per-scan: 289
+  max-structures-per-response: 512
+  max-cache-entries: 4096
+  max-inbound-payload-bytes: 8192
+  splitter-slice-bytes: 30000
+  max-response-bytes: 8388608
+  whitelist-enabled: false
+  whitelist: []
+  # Structure locations are sensitive. Buried treasure is hidden by default.
+  blacklist-enabled: true
+  blacklist:
+    - minecraft:buried_treasure
+
+# MiniHUD entityDataSync. The initial safe scope exposes beehive block NBT
+# for infoBeeCount while denying all other block entity types by default.
+entity-data:
+  enabled: true
+  requests-per-second: 20
+  max-distance: 32
+  max-inbound-payload-bytes: 8192
+  max-response-bytes: 262144
+  block-entity-allowlist-enabled: true
+  allowed-block-entities:
+    - minecraft:beehive
+
+logging:
+  debug: false
+
+# Easy Place V3 is carried in the vanilla use-item-on hit vector, not in the
+# servux:litematics custom payload channel.
+protocol:
+  enabled: true
+  version: v3
+  advertise-carpet-v2: false
+  validate-states: true
+
+security:
+  max-payload: 16777215
+  # Two seconds tolerates region stalls without keeping stale packets for long.
+  pending-ttl-ms: 2000
+  max-pending-per-player: 16
+  client-resync-delay-ticks: 1
+
+debug: false
