@@ -2,7 +2,7 @@
 
 All notable changes to ServuxFolia are documented in this file.
 
-## [Unreleased]
+## [1.1.0] - 2026-07-18
 
 ### Added
 
@@ -44,4 +44,5 @@ First stable release.
 - Per-subregion rotation/mirroring in Direct Paste is rejected.
 - Multi-frame `Litematic-Transmit*` file transfer is not advertised.
 
+[1.1.0]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.1.0
 [1.0.0]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.0.0
