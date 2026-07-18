@@ -2,7 +2,13 @@
 
 All notable changes to ServuxFolia are documented in this file.
 
-## [1.0.1] - 2026-07-18
+## [Unreleased]
+
+### Added
+
+- MiniHUD Villager Info Overlay support through Folia-safe tracked entity NBT queries.
+- Per-player tracked-entity lookup, entity type allowlist and a separate entity request rate limit.
+- Villagers and zombie villagers are allowed by default; untracked or distant entities return empty data.
 
 ### Fixed
 
@@ -38,5 +44,4 @@ First stable release.
 - Per-subregion rotation/mirroring in Direct Paste is rejected.
 - Multi-frame `Litematic-Transmit*` file transfer is not advertised.
 
-[1.0.1]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.0.1
 [1.0.0]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.0.0

@@ -61,6 +61,7 @@ public final class ServuxFoliaPlugin extends JavaPlugin implements Listener {
         getServer().getMessenger().registerOutgoingPluginChannel(
                 this, EntityDataProtocol.CHANNEL);
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(entityData, this);
         getServer().getPluginManager().registerEvents(easyPlaceInterceptor, this);
         getServer().getPluginManager().registerEvents(new BlockPlaceListener(
                 this, () -> easyPlaceSettings, pendingPlacements,
@@ -155,7 +156,8 @@ public final class ServuxFoliaPlugin extends JavaPlugin implements Listener {
                 + " | structures=" + getConfig().getBoolean("structures.enabled", true)
                 + " (clients=" + structures.registeredCount() + ")"
                 + " | entityData=" + getConfig().getBoolean("entity-data.enabled", true)
-                + " (clients=" + entityData.registeredCount() + ")"
+                + " (clients=" + entityData.registeredCount()
+                + ", tracked=" + entityData.trackedEntityCount() + ")"
                 + " | easyPlace=" + easyPlaceSettings.protocolVersion()
                 + " | captured/applied/rejected=" + easyPlaceStats.capturedCount()
                 + "/" + easyPlaceStats.appliedCount() + "/" + easyPlaceStats.rejectedCount()
@@ -177,7 +179,7 @@ public final class ServuxFoliaPlugin extends JavaPlugin implements Listener {
 
     private void migrateConfig() {
         int version = getConfig().getInt("config-version", 1);
-        if (version >= 4) {
+        if (version >= 5) {
             return;
         }
 
@@ -199,9 +201,13 @@ public final class ServuxFoliaPlugin extends JavaPlugin implements Listener {
         }
         getConfig().addDefault("litematics.max-inbound-sessions", 4);
         getConfig().addDefault("direct-paste.max-concurrent", 1);
-        getConfig().set("config-version", 4);
+        getConfig().addDefault("entity-data.entity-requests-per-second", 64);
+        getConfig().addDefault("entity-data.entity-allowlist-enabled", true);
+        getConfig().addDefault("entity-data.allowed-entities",
+                java.util.List.of("minecraft:villager", "minecraft:zombie_villager"));
+        getConfig().set("config-version", 5);
         getConfig().options().copyDefaults(true);
         saveConfig();
-        getLogger().info("Migrated configuration defaults to version 4.");
+        getLogger().info("Migrated configuration defaults to version 5.");
     }
 }

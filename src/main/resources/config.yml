@@ -1,4 +1,4 @@
-config-version: 4
+config-version: 5
 
 litematics:
   enabled: true
@@ -45,17 +45,24 @@ structures:
   blacklist:
     - minecraft:buried_treasure
 
-# MiniHUD entityDataSync. The initial safe scope exposes beehive block NBT
-# for infoBeeCount while denying all other block entity types by default.
+# MiniHUD entityDataSync. By default this exposes beehive block NBT plus
+# tracked villager/zombie-villager entity NBT for bee and villager overlays.
 entity-data:
   enabled: true
+  # Block entity requests, such as infoBeeCount.
   requests-per-second: 20
+  # Villager overlays refresh multiple nearby entities at once.
+  entity-requests-per-second: 64
   max-distance: 32
   max-inbound-payload-bytes: 8192
   max-response-bytes: 262144
   block-entity-allowlist-enabled: true
   allowed-block-entities:
     - minecraft:beehive
+  entity-allowlist-enabled: true
+  allowed-entities:
+    - minecraft:villager
+    - minecraft:zombie_villager
 
 logging:
   debug: false

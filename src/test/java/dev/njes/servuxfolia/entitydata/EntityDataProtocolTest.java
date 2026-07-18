@@ -61,4 +61,42 @@ class EntityDataProtocolTest {
             assertEquals(pos, decoded.body().readBlockPos());
         }
     }
+
+    @Test
+    void villagerEntityResponseContainsOffers() {
+        CompoundTag recipe = new CompoundTag();
+        recipe.putInt("uses", 0);
+        ListTag recipes = new ListTag();
+        recipes.add(recipe);
+        CompoundTag offers = new CompoundTag();
+        offers.put("Recipes", recipes);
+        CompoundTag villager = new CompoundTag();
+        villager.putString("id", "minecraft:villager");
+        villager.put("Offers", offers);
+
+        byte[] packet = EntityDataProtocol.entity(42, villager);
+
+        try (ProtocolCodec.Decoded decoded = ProtocolCodec.decode(packet, 262_144)) {
+            assertEquals(EntityDataProtocol.S2C_ENTITY_RESPONSE, decoded.packetType());
+            assertEquals(42, decoded.body().readVarInt());
+            CompoundTag nbt = decoded.body().readNbt();
+            assertNotNull(nbt);
+            assertEquals("minecraft:villager", nbt.getStringOr("id", ""));
+            assertEquals(1, nbt.getCompoundOrEmpty("Offers").getListOrEmpty("Recipes").size());
+        }
+    }
+
+    @Test
+    void decodesMiniHudLegacyTransactionBeforeEntityId() {
+        byte[] request = ProtocolCodec.encode(EntityDataProtocol.C2S_ENTITY_REQUEST, buffer -> {
+            buffer.writeVarInt(-1);
+            buffer.writeVarInt(42);
+        });
+
+        try (ProtocolCodec.Decoded decoded = EntityDataProtocol.decode(request, 8_192)) {
+            assertEquals(EntityDataProtocol.C2S_ENTITY_REQUEST, decoded.packetType());
+            assertEquals(-1, decoded.body().readVarInt());
+            assertEquals(42, decoded.body().readVarInt());
+        }
+    }
 }
