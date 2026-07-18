@@ -4,8 +4,11 @@ import dev.njes.servuxfolia.protocol.PacketSplitter;
 import dev.njes.servuxfolia.protocol.ProtocolCodec;
 import io.netty.buffer.Unpooled;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /** Wire codec for MiniHUD's public {@code servux:structures} protocol v2. */
@@ -33,6 +36,17 @@ public final class StructureProtocol {
         metadata.putString("servux", "ServuxFolia " + pluginVersion);
         metadata.putInt("timeout", timeoutTicks);
         return ProtocolCodec.encode(S2C_METADATA, buffer -> buffer.writeNbt(metadata));
+    }
+
+    static CompoundTag structurePayload(List<CompoundTag> starts) {
+        List<CompoundTag> ordered = new ArrayList<>(starts);
+        ordered.sort(Comparator.comparing(tag -> tag.getStringOr("id", "")));
+
+        ListTag structures = new ListTag();
+        ordered.forEach(structures::add);
+        CompoundTag payload = new CompoundTag();
+        payload.put("Structures", structures);
+        return payload;
     }
 
     public static List<byte[]> structureData(CompoundTag payload, int sliceBytes, int maxBytes) {

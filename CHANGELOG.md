@@ -2,6 +2,13 @@
 
 All notable changes to ServuxFolia are documented in this file.
 
+## [1.0.1] - 2026-07-18
+
+### Fixed
+
+- Fixed `UnsupportedOperationException` while encoding an empty MiniHUD structure scan result.
+- Structure responses now sort a mutable snapshot instead of mutating a possibly immutable caller list.
+
 ## [1.0.0] - 2026-07-16
 
 First stable release.
@@ -31,4 +38,5 @@ First stable release.
 - Per-subregion rotation/mirroring in Direct Paste is rejected.
 - Multi-frame `Litematic-Transmit*` file transfer is not advertised.
 
+[1.0.1]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.0.1
 [1.0.0]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.0.0

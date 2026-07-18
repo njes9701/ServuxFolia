@@ -7,7 +7,6 @@ import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -308,11 +307,7 @@ public final class StructureService {
         }
         FoliaTasks.async(plugin, () -> {
             try {
-                starts.sort(Comparator.comparing(tag -> tag.getStringOr("id", "")));
-                ListTag list = new ListTag();
-                starts.forEach(list::add);
-                CompoundTag response = new CompoundTag();
-                response.put("Structures", list);
+                CompoundTag response = StructureProtocol.structurePayload(starts);
                 List<byte[]> packets = StructureProtocol.structureData(
                         response, scanSettings.splitterSliceBytes(), scanSettings.maxResponseBytes());
                 player.getScheduler().execute(plugin, () -> {

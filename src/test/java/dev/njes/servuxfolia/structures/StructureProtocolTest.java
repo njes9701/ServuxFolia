@@ -81,6 +81,32 @@ class StructureProtocolTest {
                 () -> StructureProtocol.structureData(response, 64, 32));
     }
 
+    @Test
+    void buildsPayloadFromImmutableEmptyList() {
+        CompoundTag payload = StructureProtocol.structurePayload(List.of());
+
+        assertTrue(payload.getListOrEmpty("Structures").isEmpty());
+    }
+
+    @Test
+    void sortsImmutableStructureListWithoutMutatingIt() {
+        CompoundTag village = new CompoundTag();
+        village.putString("id", "minecraft:village");
+        CompoundTag fortress = new CompoundTag();
+        fortress.putString("id", "minecraft:fortress");
+        List<CompoundTag> immutable = List.of(village, fortress);
+
+        CompoundTag payload = StructureProtocol.structurePayload(immutable);
+        ListTag structures = payload.getListOrEmpty("Structures");
+
+        assertEquals(2, structures.size());
+        assertEquals("minecraft:fortress",
+                structures.getCompoundOrEmpty(0).getStringOr("id", ""));
+        assertEquals("minecraft:village",
+                structures.getCompoundOrEmpty(1).getStringOr("id", ""));
+        assertEquals("minecraft:village", immutable.getFirst().getStringOr("id", ""));
+    }
+
     private static byte[] prependZeroPacketType(byte[] payload) {
         byte[] result = new byte[payload.length + 1];
         System.arraycopy(payload, 0, result, 1, payload.length);
