@@ -40,7 +40,7 @@ import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 /**
- * Paper 26.1.2 NMS bridge implementation. Depends on mojang-mapped
+ * Paper 26.3 NMS bridge implementation. Depends on mojang-mapped
  * {@code net.minecraft.*} classes via paperweight-userdev.
  *
  * <p>All public methods are designed to be called from the chunk's owning
@@ -90,7 +90,7 @@ public final class NmsBridge26_2 implements NmsBridge {
             cleaned.remove("y");
             cleaned.remove("z");
             cleaned.remove("id");
-            // TagValueInput.create returns a ValueInput in 26.1.2 — use var.
+            // TagValueInput.create returns a ValueInput in 26.3 — use var.
             var input = TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), cleaned);
             be.loadWithComponents(input);
             be.setChanged();
@@ -189,8 +189,8 @@ public final class NmsBridge26_2 implements NmsBridge {
 
     // ------------------------------------------------------------------ Extraction (save v2)
     // 2026-05-24: real NMS impl. saveWithFullMetadata(HolderLookup.Provider)
-    // is the canonical capture API on 26.1.2 for BlockEntities; Entity#save
-    // takes a ValueOutput in 26.1.2 (TagValueOutput.createWithContext builds
+    // is the canonical capture API on 26.3 for BlockEntities; Entity#save
+    // takes a ValueOutput in 26.3 (TagValueOutput.createWithContext builds
     // one against a problem reporter + registry access).
 
     @Override

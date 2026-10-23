@@ -97,11 +97,9 @@ public final class EntityDataService implements Listener {
                     register(player, current);
                 }
                 case EntityDataProtocol.C2S_BLOCK_ENTITY_REQUEST -> {
-                    decoded.body().readVarInt(); // legacy transaction id
                     requestBlockEntity(player, decoded.body().readBlockPos(), current);
                 }
                 case EntityDataProtocol.C2S_ENTITY_REQUEST -> {
-                    decoded.body().readVarInt(); // legacy transaction id
                     int entityId = decoded.body().readVarInt();
                     requestEntity(player, entityId, current);
                 }

@@ -129,8 +129,7 @@ public interface NmsBridge {
     // -------------------------------------------------------------- Factory
 
     /**
-     * Returns the active bridge implementation. On Paper 26.1.2 this is the
-     * {@code NmsBridge26_2} class loaded reflectively. If class resolution fails,
+     * Returns the active bridge implementation. If class resolution fails,
      * returns a {@link NoopNmsBridge} that logs warnings.
      */
     static NmsBridge get() {

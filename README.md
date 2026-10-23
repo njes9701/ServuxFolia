@@ -14,10 +14,10 @@ ServuxFolia 是針對 **Folia** 設計的伺服器插件，實作 Litematica、T
 
 | 元件 | 需求 |
 | --- | --- |
-| 伺服器 | Folia 26.2 |
+| 伺服器 | Folia 26.3 |
 | Java | 25 |
-| 藍圖客戶端 | 對應 26.2 的 Litematica／Tweakeroo |
-| 資訊顯示客戶端 | 對應 26.2 的 MiniHUD |
+| 藍圖客戶端 | 對應 26.3 的 Litematica／Tweakeroo |
+| 資訊顯示客戶端 | 對應 26.3 的 MiniHUD |
 
 此插件使用 Folia/Paper 的版本專屬內部介面，因此**不能假設能在其他 Minecraft、
 Paper 或 Folia 版本運作**。升級伺服器前請先等待對應版本的插件。
@@ -131,7 +131,7 @@ Direct Paste 還要求 `servuxfolia.paste`（預設 OP），而且預設只允�
 
 ## 已知限制
 
-- 僅支援 Folia 26.2／Java 25。
+- 僅支援 Folia 26.3／Java 25。
 - Direct Paste 的每個 subregion 個別旋轉或鏡像目前會明確拒絕；subregion 啟用狀態與位置覆寫可用。
 - 尚未廣告大型多幀 `Litematic-Transmit*` 檔案傳輸；一般 inline Litematica paste 可用。
 - 結構顯示刻意不強制載入區塊，因此未載入區域不會立即出現。
@@ -163,7 +163,7 @@ ServuxFolia 以 [GPL-3.0](LICENSE) 發布。協議研究與相容性參考：
 
 ServuxFolia is a clean-room, Folia-native server plugin implementing the public
 Servux wire protocols used by Litematica, Tweakeroo and MiniHUD. It targets
-Folia 26.2 and Java 25, providing Easy Place V3, bounded Litematica NBT/Direct
+Folia 26.3 and Java 25, providing Easy Place V3, bounded Litematica NBT/Direct
 Paste support, MiniHUD structure overlays, beehive data and Folia-safe tracked
 villager trade sync. The `main` branch may contain unreleased snapshot features;
 use GitHub Releases for stable server deployments. See the sections above for

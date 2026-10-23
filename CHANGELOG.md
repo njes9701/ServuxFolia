@@ -2,6 +2,15 @@
 
 All notable changes to ServuxFolia are documented in this file.
 
+## [1.2.0] - 2026-10-23
+
+### Fixed
+
+- Updated the server target and NMS bridge for Folia 26.3.
+- Restored MiniHUD 26.3 structure overlay compatibility by matching its current structures protocol and compressed NBT payload format.
+- Updated MiniHUD entity-data responses for current metadata, payload, and request formats.
+- Updated Easy Place packet handling for the 26.3 serverbound use-on packet API.
+
 ## [1.1.0] - 2026-07-18
 
 ### Added
@@ -40,9 +49,10 @@ First stable release.
 
 ### Known limitations
 
-- Requires Folia 26.2 and Java 25.
+- Requires Folia 26.3 and Java 25.
 - Per-subregion rotation/mirroring in Direct Paste is rejected.
 - Multi-frame `Litematic-Transmit*` file transfer is not advertised.
 
 [1.1.0]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.1.0
+[1.2.0]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.2.0
 [1.0.0]: https://github.com/njes9701/ServuxFolia/releases/tag/v1.0.0

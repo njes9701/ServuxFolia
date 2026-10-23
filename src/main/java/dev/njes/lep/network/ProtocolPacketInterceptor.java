@@ -132,7 +132,7 @@ public final class ProtocolPacketInterceptor implements Listener {
             return packet;
         }
 
-        BlockHitResult originalHit = packet.getHitResult();
+        BlockHitResult originalHit = packet.hitResult();
         BlockPos clicked = originalHit.getBlockPos();
         Vec3 location = originalHit.getLocation();
 
@@ -145,7 +145,7 @@ public final class ProtocolPacketInterceptor implements Listener {
                             originalHit.getDirection().getStepX(),
                             originalHit.getDirection().getStepY(),
                             originalHit.getDirection().getStepZ(),
-                            packet.getHand().ordinal(),
+                            packet.hand().ordinal(),
                             decoded.payload(),
                             current.protocolVersion(),
                             System.nanoTime()
@@ -168,7 +168,8 @@ public final class ProtocolPacketInterceptor implements Listener {
                             originalHit.isInside()
                     );
 
-                    return new ServerboundUseItemOnPacket(packet.getHand(), normalizedHit, packet.getSequence());
+                    return new ServerboundUseItemOnPacket(
+                            packet.hand(), normalizedHit, packet.sequence(), packet.timestamp());
                 })
                 .orElse(packet);
     }

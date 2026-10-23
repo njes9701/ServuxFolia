@@ -4,14 +4,19 @@ import dev.njes.servuxfolia.protocol.ProtocolCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.util.zip.GZIPInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class EntityDataProtocolTest {
     @Test
-    void metadataMatchesMiniHudEntityDataV1() {
+    void metadataMatchesMiniHudEntityDataV2() {
         byte[] packet = EntityDataProtocol.metadata("test");
 
         try (ProtocolCodec.Decoded decoded = ProtocolCodec.decode(packet, 8_192)) {
@@ -20,7 +25,7 @@ class EntityDataProtocolTest {
             assertNotNull(nbt);
             assertEquals("entity_data", nbt.getStringOr("name", ""));
             assertEquals(EntityDataProtocol.CHANNEL, nbt.getStringOr("id", ""));
-            assertEquals(1, nbt.getIntOr("version", -1));
+            assertEquals(2, nbt.getIntOr("version", -1));
         }
     }
 
@@ -40,7 +45,7 @@ class EntityDataProtocolTest {
         try (ProtocolCodec.Decoded decoded = ProtocolCodec.decode(packet, 262_144)) {
             assertEquals(EntityDataProtocol.S2C_BLOCK_ENTITY_RESPONSE, decoded.packetType());
             assertEquals(pos, decoded.body().readBlockPos());
-            CompoundTag nbt = decoded.body().readNbt();
+            CompoundTag nbt = readCompressedNbt(decoded.body());
             assertNotNull(nbt);
             assertEquals("minecraft:beehive", nbt.getStringOr("id", ""));
             assertEquals(1, nbt.getListOrEmpty("bees").size());
@@ -79,7 +84,7 @@ class EntityDataProtocolTest {
         try (ProtocolCodec.Decoded decoded = ProtocolCodec.decode(packet, 262_144)) {
             assertEquals(EntityDataProtocol.S2C_ENTITY_RESPONSE, decoded.packetType());
             assertEquals(42, decoded.body().readVarInt());
-            CompoundTag nbt = decoded.body().readNbt();
+            CompoundTag nbt = readCompressedNbt(decoded.body());
             assertNotNull(nbt);
             assertEquals("minecraft:villager", nbt.getStringOr("id", ""));
             assertEquals(1, nbt.getCompoundOrEmpty("Offers").getListOrEmpty("Recipes").size());
@@ -97,6 +102,20 @@ class EntityDataProtocolTest {
             assertEquals(EntityDataProtocol.C2S_ENTITY_REQUEST, decoded.packetType());
             assertEquals(-1, decoded.body().readVarInt());
             assertEquals(42, decoded.body().readVarInt());
+        }
+    }
+
+    private static CompoundTag readCompressedNbt(FriendlyByteBuf buffer) {
+        try {
+            int length = buffer.readInt();
+            byte[] compressed = new byte[length];
+            buffer.readBytes(compressed);
+            try (DataInputStream nbtInput = new DataInputStream(
+                    new GZIPInputStream(new ByteArrayInputStream(compressed)))) {
+                return net.minecraft.nbt.NbtIo.read(nbtInput);
+            }
+        } catch (java.io.IOException exception) {
+            throw new AssertionError("Could not decode compressed MiniHUD NBT", exception);
         }
     }
 }
