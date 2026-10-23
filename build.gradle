@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'xyz.jpenilla.run-paper' version '3.0.2'
-    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.21'
+    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.24'
 }
 
 group = 'dev.njes'
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle('26.2.build.60-beta')
+    paperweight.paperDevBundle('26.3.build.214-stable')
     testImplementation(platform('org.junit:junit-bom:5.12.2'))
     testImplementation('org.junit.jupiter:junit-jupiter')
     testRuntimeOnly('org.junit.platform:junit-platform-launcher')
@@ -34,7 +34,7 @@ tasks.test {
 }
 
 tasks.runServer {
-    minecraftVersion('26.2')
+    minecraftVersion('26.3')
 }
 
 processResources {

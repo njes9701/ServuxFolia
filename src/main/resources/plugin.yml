@@ -1,7 +1,7 @@
 name: ServuxFolia
 version: '${version}'
 main: dev.njes.servuxfolia.ServuxFoliaPlugin
-api-version: '26.2'
+api-version: '26.3'
 author: njes9701
 description: Folia-native implementation of the Servux protocol
 folia-supported: true

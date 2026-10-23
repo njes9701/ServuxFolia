@@ -40,7 +40,7 @@ First stable release.
 
 ### Known limitations
 
-- Requires Folia 26.2 and Java 25.
+- Requires Folia 26.3 and Java 25.
 - Per-subregion rotation/mirroring in Direct Paste is rejected.
 - Multi-frame `Litematic-Transmit*` file transfer is not advertised.
 
