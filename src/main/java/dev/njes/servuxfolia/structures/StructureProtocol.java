@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-/** Wire codec for MiniHUD's public {@code servux:structures} protocol v2. */
+/** Wire codec for MiniHUD's public {@code servux:structures} protocol v3. */
 public final class StructureProtocol {
     public static final String CHANNEL = "servux:structures";
-    public static final int VERSION = 2;
+    // MiniHUD validates this against ServuxStructuresPacket.PROTOCOL_VERSION.
+    // Protocol 3 is required by current MiniHUD releases.
+    public static final int VERSION = 3;
 
     public static final int S2C_METADATA = 1;
     public static final int S2C_STRUCTURE_DATA = 2;
@@ -33,7 +35,7 @@ public final class StructureProtocol {
         metadata.putString("name", "structure_bounding_boxes");
         metadata.putString("id", CHANNEL);
         metadata.putInt("version", VERSION);
-        metadata.putString("servux", "ServuxFolia " + pluginVersion);
+        // MiniHUD accepts only Servux-compatible metadata identifiers. It checks\n        // for the Fabric prefix even when the server implementation is a Bukkit/Folia plugin.\n        metadata.putString("servux", "servux-fabric-ServuxFolia-" + pluginVersion);
         metadata.putInt("timeout", timeoutTicks);
         return ProtocolCodec.encode(S2C_METADATA, buffer -> buffer.writeNbt(metadata));
     }
